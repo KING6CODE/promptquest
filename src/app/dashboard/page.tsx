@@ -120,7 +120,22 @@ export default function DashboardPage() {
                   <span>⚡ +50 XP</span>
                 </div>
               </div>
-              <button className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-indigo-50 transition-all">
+              <button
+                onClick={async () => {
+                  // Get first lesson ID
+                  const { data } = await supabase
+                    .from('lessons')
+                    .select('id')
+                    .order('order_index')
+                    .limit(1)
+                    .single()
+                  
+                  if (data) {
+                    router.push(`/lesson/${data.id}`)
+                  }
+                }}
+                className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-indigo-50 transition-all"
+              >
                 Commencer →
               </button>
             </div>
